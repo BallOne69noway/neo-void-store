@@ -10,11 +10,11 @@ export default function Home() {
   const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const addToCart = () => {
-    setCartCount(prev => prev + 1);
-  };
-
+  // 1. При загрузке страницы проверяем, есть ли что-то в корзине
   useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCartCount(savedCart.length);
+
     const fetchProducts = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "products"));
@@ -32,6 +32,21 @@ export default function Home() {
     fetchProducts();
   }, []);
 
+  // 2. Исправленная функция добавления (теперь сохраняет объект целиком)
+  const addToCart = (product: any) => {
+    // Получаем текущий список из памяти
+    const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Добавляем новый товар в массив
+    const updatedCart = [...currentCart, product];
+    
+    // Сохраняем обновленный массив обратно в localStorage
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    
+    // Обновляем цифру в Хедере
+    setCartCount(updatedCart.length);
+  };
+
   return (
     <main className="min-h-screen bg-black text-white font-mono">
       <Header cartCount={cartCount} />
@@ -47,7 +62,8 @@ export default function Home() {
               <ProductCard 
                 key={product.id} 
                 {...product} 
-                onAddToCart={addToCart} 
+                // Теперь передаем сам объект товара в функцию
+                onAddToCart={() => addToCart(product)} 
               />
             ))}
           </section>
