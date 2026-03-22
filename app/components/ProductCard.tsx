@@ -13,7 +13,7 @@ interface ProductProps {
 export const ProductCard = ({ name, price, category, image, count, onAddToCart }: ProductProps) => {
   return (
     <div className="group relative border border-[#111] bg-[#050505] p-4 transition-all duration-500 hover:border-white/50">
-      <div className="aspect-[3/4] bg-[#0a0a0a] mb-6 flex items-center justify-center relative overflow-hidden">
+      <div className="aspect-3/4 bg-[#0a0a0a] mb-6 flex items-center justify-center relative overflow-hidden">
         {image && <img src={image} alt={name} className="w-full h-full object-cover grayscale md:hover:grayscale-0 transition-all duration-700" />}
         {/* Метка количества сверху справа на фото */}
         {count > 0 && (
