@@ -21,4 +21,8 @@
 1. Clone the repository:
    ```bash
    git clone [https://github.com/BallOne69noway/neo-void-store.git](https://github.com/BallOne69noway/neo-void-store.git)
+<<<<<<< HEAD
 2.site https://neo-void-store.web.app
+=======
+2.site https://neo-void-store.web.app
+>>>>>>> 0c08c14c204763cf39d9aeeb83410d506ff6c20c

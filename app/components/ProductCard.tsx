@@ -16,27 +16,31 @@ export const ProductCard = ({ name, price, category, image, onAddToCart }: Produ
           <img 
             src={image} 
             alt={name} 
-            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
+            className="w-full h-full object-cover grayscale md:hover:grayscale-0 transition-all duration-700 scale-110 md:group-hover:scale-100"
           />
         ) : (
-          <span className="text-[10px] text-gray-900 group-hover:text-gray-500 transition-colors uppercase tracking-widest z-10">
+          <span className="text-[10px] text-gray-900 md:group-hover:text-gray-500 transition-colors uppercase tracking-widest z-10">
             [ Digital_Void ]
           </span>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-top from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       </div>
       
       <div className="flex justify-between items-start pt-2">
         <div className="space-y-1">
           <p className="text-[9px] text-gray-700 uppercase tracking-tighter italic">{category}</p>
-          <h3 className="text-xs font-bold uppercase tracking-widest group-hover:tracking-normal transition-all">{name}</h3>
+          <h3 className="text-xs font-bold uppercase tracking-widest md:group-hover:tracking-normal transition-all">{name}</h3>
         </div>
         <p className="text-xs font-mono text-gray-400">${price}</p>
       </div>
       
+      {/* Кнопка теперь всегда видна на мобилках (block) и появляется при ховере на десктопе (md:opacity-0) */}
       <button 
-        onClick={onAddToCart}
-        className="w-full mt-4 py-2 border border-white text-[10px] uppercase font-black opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black active:scale-95"
+        onClick={(e) => {
+          e.preventDefault();
+          onAddToCart();
+        }}
+        className="relative z-30 w-full mt-4 py-3 border border-white text-[10px] uppercase font-black bg-white text-black md:bg-transparent md:text-white md:opacity-0 md:group-hover:opacity-100 transition-all hover:bg-white hover:text-black active:scale-95 touch-manipulation"
       >
         Add to Cart
       </button>
