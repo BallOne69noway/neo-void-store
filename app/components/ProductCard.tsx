@@ -41,7 +41,7 @@ export const ProductCard = ({ name, price, category, image, count, onAddToCart }
               y: -500 // Летит вверх
             }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed pointer-events-none z-[100] w-20 h-20 bg-white border border-black"
+            className="fixed pointer-events-none z-100 w-20 h-20 bg-white border border-black"
             style={{ left: '45%', top: '40%' }}
           >
              {image && <img src={image} className="w-full h-full object-cover grayscale" />}
@@ -49,7 +49,7 @@ export const ProductCard = ({ name, price, category, image, count, onAddToCart }
         )}
       </AnimatePresence>
 
-      <div className="aspect-[3/4] bg-[#0a0a0a] mb-6 flex items-center justify-center relative overflow-hidden">
+      <div className="aspect-3/4 bg-[#0a0a0a] mb-6 flex items-center justify-center relative overflow-hidden">
         {image && (
           <motion.img 
             whileHover={{ scale: 1.05 }}
