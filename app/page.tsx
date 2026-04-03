@@ -7,7 +7,7 @@ import { ProductCard } from './components/ProductCard';
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
-  const [cartItems, setCartItems] = useState<any[]>([]); // Храним сами объекты
+  const [cartItems, setCartItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +18,10 @@ export default function Home() {
       try {
         const querySnapshot = await getDocs(collection(db, "products"));
         const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setProducts(items);
+        
+        // Показываем только активные товары (не заархивированные)
+        const activeItems = items.filter((item: any) => item.status !== 'archived');
+        setProducts(activeItems);
       } catch (error) {
         console.error("Firebase Error:", error);
       } finally {
@@ -32,6 +35,7 @@ export default function Home() {
     const updatedCart = [...cartItems, product];
     setCartItems(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
+    window.dispatchEvent(new Event('storage'));
   };
 
   return (
@@ -43,13 +47,12 @@ export default function Home() {
         ) : (
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-10">
             {products.map((product) => {
-              // Считаем сколько именно этого товара в корзине
               const count = cartItems.filter(item => item.id === product.id).length;
               return (
                 <ProductCard 
                   key={product.id} 
                   {...product} 
-                  count={count} // Передаем число
+                  count={count} 
                   onAddToCart={() => addToCart(product)} 
                 />
               );

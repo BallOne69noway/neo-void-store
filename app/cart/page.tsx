@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { Header } from '../components/Header'; // Обязательно импортируем!
 
 export default function CartPage() {
   const [items, setItems] = useState<any[]>([]);
@@ -17,16 +18,19 @@ export default function CartPage() {
       newItems.splice(index, 1);
       setItems(newItems);
       localStorage.setItem('cart', JSON.stringify(newItems));
-      // Обновляем заголовок, если нужно
       window.dispatchEvent(new Event('storage'));
     }
   };
 
-  const totalPrice = items.reduce((sum, item) => sum + item.price, 0);
+  // ПРАВИЛЬНЫЙ РАСЧЕТ: Number() страхует от ошибок типов данных
+  const totalPrice = items.reduce((sum, item) => sum + Number(item.price || 0), 0);
 
   return (
-    <div className="min-h-screen bg-black text-white pt-32 px-6 font-mono">
-      <div className="max-w-2xl mx-auto">
+    <main className="min-h-screen bg-black text-white font-mono">
+      {/* Теперь меню всегда на месте */}
+      <Header cartCount={items.length} />
+
+      <div className="max-w-2xl mx-auto pt-32 px-6">
         <h1 className="text-4xl font-black uppercase mb-12 italic tracking-tighter">Void_Cart</h1>
         
         {items.length === 0 ? (
@@ -40,10 +44,11 @@ export default function CartPage() {
           <div className="space-y-8">
             <div className="space-y-4">
               {items.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-center border-b border-white/5 pb-4 group">
+                <div key={idx} className="flex justify-between items-center border-b border-white/5 pb-4 group transition-colors hover:border-white/20">
                   <div className="flex flex-col">
                     <span className="text-xs uppercase font-bold tracking-widest">{item.name}</span>
-                    <span className="text-[10px] text-gray-500 mt-1">${item.price}</span>
+                    {/* Выводим цену через Number для безопасности */}
+                    <span className="text-[10px] text-gray-500 mt-1">${Number(item.price)}</span>
                   </div>
                   <button 
                     onClick={() => removeItem(item.id)}
@@ -58,10 +63,10 @@ export default function CartPage() {
             <div className="pt-10 border-t border-white/20">
               <div className="flex justify-between items-baseline mb-10">
                 <span className="text-[10px] uppercase text-gray-500 tracking-widest">Total_Sum</span>
+                {/* Итоговая сумма теперь всегда число */}
                 <span className="text-3xl font-black italic">${totalPrice}</span>
               </div>
               
-              {/* ВОТ ОНА — КНОПКА ОПЛАТЫ */}
               <button 
                 onClick={() => alert("Checkout system coming soon...")}
                 className="w-full py-5 bg-white text-black font-black uppercase text-xs tracking-[0.4em] hover:bg-gray-200 transition-all active:scale-[0.98]"
@@ -76,6 +81,6 @@ export default function CartPage() {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }

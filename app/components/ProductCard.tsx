@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface ProductProps {
   id: string;
   name: string;
-  price: number;
+  price: any; // Используем any, чтобы принимать и строку, и число из Firebase
   category: string;
   image?: string;
   count: number;
@@ -37,39 +37,45 @@ export const ProductCard = ({ name, price, category, image, count, onAddToCart }
             animate={{ 
               opacity: 0, 
               scale: 0.2, 
-              x: 300, // Летит вправо (в сторону корзины)
+              x: 300, // Летит вправо в сторону корзины
               y: -500 // Летит вверх
             }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed pointer-events-none z-100 w-20 h-20 bg-white border border-black"
+            className="fixed pointer-events-none z-[100] w-20 h-20 bg-white border border-black shadow-[0_0_20px_rgba(255,255,255,0.5)]"
             style={{ left: '45%', top: '40%' }}
           >
-             {image && <img src={image} className="w-full h-full object-cover grayscale" />}
+             {image && <img src={image} className="w-full h-full object-cover grayscale" alt="flying-preview" />}
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="aspect-3/4 bg-[#0a0a0a] mb-6 flex items-center justify-center relative overflow-hidden">
+      <div className="aspect-[3/4] bg-[#0a0a0a] mb-6 flex items-center justify-center relative overflow-hidden">
         {image && (
           <motion.img 
             whileHover={{ scale: 1.05 }}
             src={image} 
+            alt={name}
             className="w-full h-full object-cover grayscale md:hover:grayscale-0 transition-all duration-700" 
           />
         )}
         {count > 0 && (
-          <div className="absolute top-2 right-2 bg-white text-black text-[10px] font-bold px-2 py-1 z-30">
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="absolute top-2 right-2 bg-white text-black text-[10px] font-bold px-2 py-1 z-30"
+          >
             SELECTED: {count}
-          </div>
+          </motion.div>
         )}
       </div>
       
       <div className="flex justify-between items-start pt-2">
         <div className="space-y-1">
-          <p className="text-[9px] text-gray-700 uppercase italic">{category}</p>
-          <h3 className="text-xs font-bold uppercase tracking-widest">{name}</h3>
+          <p className="text-[9px] text-gray-700 uppercase italic tracking-tighter">{category}</p>
+          <h3 className="text-xs font-bold uppercase tracking-widest leading-none">{name}</h3>
         </div>
-        <p className="text-xs font-mono text-gray-400">${price}</p>
+        {/* Превращаем цену в число для корректного вывода */}
+        <p className="text-xs font-mono text-gray-400">${Number(price)}</p>
       </div>
       
       <button 
