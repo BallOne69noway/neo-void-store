@@ -1,0 +1,21 @@
+{
+  "name": "NEO-VOID STORE",
+  "short_name": "NEO-VOID",
+  "description": "Premium Garments Archive",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "https://i.ibb.co/3yxYhD7/pants.jpg", 
+      "type": "image/jpg",
+      "sizes": "512x512"
+    }
+  ]
+}

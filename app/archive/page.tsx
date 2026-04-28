@@ -60,7 +60,7 @@ export default function ArchivePage() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 1 }}
-                className="group relative aspect-[3/4] bg-[#050505] border border-white/5 p-4 flex flex-col justify-between grayscale hover:grayscale-0 transition-all duration-1000"
+                className="group relative aspect-3/4 bg-[#050505] border border-white/5 p-4 flex flex-col justify-between grayscale hover:grayscale-0 transition-all duration-1000"
               >
                 <div className="flex justify-between items-start">
                   <span className="text-[9px] text-gray-700">{item.id.substring(0, 6)}</span>

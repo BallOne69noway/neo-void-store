@@ -10,4 +10,21 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  /* Магия для мобильного приложения */
+  -webkit-tap-highlight-color: transparent; /* Убирает синюю вспышку при клике на кнопки */
+  -webkit-touch-callout: none;              /* Запрещает контекстное меню при долгом тапе на картинки */
+  user-select: none;                        /* Запрещает выделение текста (кроме полей ввода) */
+  overflow-x: hidden;                       /* Страхует от горизонтального скролла */
+}
+
+/* Возвращаем возможность выделения текста в формах, если они будут */
+input, textarea {
+  user-select: text;
+}
+
+/* Плавный скролл для более нативного ощущения */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
